@@ -61,25 +61,35 @@ function createTodoItem(todo, todoIndex){
         allTodos[todoIndex].completed = checkbox.checked;
         saveTodos();
         if (checkbox.checked) {
-            // Trigger confetti effect when todo is checked
             triggerConfetti();
+            completionText();
         }
     });
 
     checkbox.checked = todo.completed;
     return todoLI;
 }
+function completionText(){
+    const levitatingText = document.createElement('div');
+        levitatingText.classList.add('levitating-text');
+        levitatingText.textContent = "You have completed a task";
+        document.body.appendChild(levitatingText);
+        setTimeout(() => {
+            levitatingText.remove();
+        }, 1500);
+}
 function triggerConfetti() {
-    const centerX = window.innerWidth / 2;
-    const centerY = window.innerHeight / 2;
-    confetti({
-        particleCount: 150,
-        spread: 180,
-        origin: {
-            x: Math.random(),
-            y: Math.random() - 0.2
-          }
-    });
+    for (let i = 0; i < 5; i++) {
+        confetti({
+            particleCount: 200,
+            spread: 300,
+           // decay: 0.5,
+            origin: {
+                x: Math.random(),
+                y: Math.random() - 0.2
+            }
+        });
+    }
 }
 function deleteTodoItem(todoIndex){
     allTodos = allTodos.filter((_, i)=> i !== todoIndex);
